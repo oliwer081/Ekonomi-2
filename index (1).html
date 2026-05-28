@@ -1,0 +1,1986 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ekonomicoachen — Din väg till frihet</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Syne:wght@400;600;700;800&family=Inconsolata:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #f5f0e8;
+      --bg2:       #ede6d6;
+      --surface:   #faf7f1;
+      --surface2:  #f0ead8;
+      --border:    #d9cdb8;
+      --border2:   #c8b99a;
+      --accent:    #5c7a3e;
+      --accent-lt: #7da055;
+      --accent-bg: rgba(92,122,62,0.08);
+      --amber:     #c47c2b;
+      --amber-bg:  rgba(196,124,43,0.1);
+      --sky:       #3a6b8a;
+      --sky-bg:    rgba(58,107,138,0.08);
+      --rose:      #b84f4f;
+      --rose-bg:   rgba(184,79,79,0.08);
+      --text:      #2d2418;
+      --text2:     #5a4d3a;
+      --muted:     #8c7d66;
+      --shadow:    rgba(45,36,24,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Lora', serif;
+      font-weight: 400;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.2rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(245,240,232,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .nav-link {
+      font-family: 'Inconsolata', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      color: var(--text2);
+      background: transparent;
+      border: 1px solid var(--border);
+      padding: 0.4rem 0.9rem;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      text-decoration: none;
+    }
+
+    .nav-link:hover { background: var(--accent-bg); color: var(--accent); border-color: var(--accent); }
+
+    .nav-chat-btn {
+      font-family: 'Inconsolata', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      background: var(--accent);
+      color: #f5f0e8;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .nav-chat-btn:hover { background: var(--accent-lt); transform: translateY(-1px); }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 4rem;
+      overflow: hidden;
+    }
+
+    .hero-decoration { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+    .hero-circle { position: absolute; border-radius: 50%; opacity: 0.18; }
+    .hero-circle-1 { width: 500px; height: 500px; background: radial-gradient(circle, #a3c878 0%, transparent 70%); top: -100px; right: -100px; animation: drift 12s ease-in-out infinite; }
+    .hero-circle-2 { width: 350px; height: 350px; background: radial-gradient(circle, #c4a56b 0%, transparent 70%); bottom: 50px; left: -80px; animation: drift 15s ease-in-out infinite reverse; }
+    .hero-circle-3 { width: 200px; height: 200px; background: radial-gradient(circle, #7aadcc 0%, transparent 70%); top: 40%; left: 20%; animation: drift 10s ease-in-out infinite 2s; }
+
+    @keyframes drift {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(20px, -15px) scale(1.05); }
+      66% { transform: translate(-10px, 20px) scale(0.97); }
+    }
+
+    .hero-tag {
+      font-family: 'Inconsolata', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      color: var(--accent);
+      text-transform: uppercase;
+      background: var(--accent-bg);
+      border: 1px solid rgba(92,122,62,0.25);
+      padding: 0.4rem 1.2rem;
+      border-radius: 100px;
+      margin-bottom: 2.5rem;
+      display: inline-block;
+      animation: fadeUp 0.9s ease both;
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.8rem, 7vw, 6rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+      color: var(--text);
+      animation: fadeUp 0.9s 0.15s ease both;
+    }
+
+    h1 em {
+      font-style: italic;
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      color: var(--text2);
+      font-size: 1.05rem;
+      max-width: 560px;
+      line-height: 1.75;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.9s 0.3s ease both;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 0.9s 0.45s ease both;
+    }
+
+    .cta-btn {
+      background: var(--accent);
+      color: #f5f0e8;
+      border: none;
+      padding: 1rem 2.5rem;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      text-decoration: none;
+      display: inline-block;
+      text-transform: uppercase;
+    }
+
+    .cta-btn:hover { background: var(--accent-lt); transform: translateY(-3px); box-shadow: 0 14px 40px rgba(92,122,62,0.25); }
+
+    .cta-btn-outline {
+      background: transparent;
+      color: var(--accent);
+      border: 2px solid var(--accent);
+      padding: 1rem 2.5rem;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: transform 0.2s, background 0.2s, color 0.2s;
+      text-decoration: none;
+      display: inline-block;
+      text-transform: uppercase;
+    }
+
+    .cta-btn-outline:hover { background: var(--accent-bg); transform: translateY(-3px); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      color: var(--muted);
+      font-family: 'Inconsolata', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      animation: fadeUp 1s 1s ease both;
+    }
+
+    .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--muted), transparent); animation: scrollPulse 2.2s ease-in-out infinite; }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 0.9; transform: scaleY(0.6); }
+    }
+
+    /* LEARN SECTION */
+    .learn-section {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-tag {
+      font-family: 'Inconsolata', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      color: var(--amber);
+      text-transform: uppercase;
+      background: var(--amber-bg);
+      border: 1px solid rgba(196,124,43,0.25);
+      padding: 0.35rem 1rem;
+      border-radius: 100px;
+      display: inline-block;
+      margin-bottom: 1.2rem;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: var(--text);
+      margin-bottom: 0.8rem;
+    }
+
+    .section-sub {
+      color: var(--text2);
+      font-size: 0.95rem;
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .learn-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .learn-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 0;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      box-shadow: 0 2px 12px var(--shadow);
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .learn-card.visible { opacity: 1; transform: translateY(0); transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.25s, border-color 0.25s; }
+    .learn-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(45,36,24,0.12); border-color: var(--border2); }
+
+    .learn-card-top {
+      padding: 1.75rem 1.75rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .learn-card-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .learn-card-info { flex: 1; }
+
+    .learn-card-category {
+      font-family: 'Inconsolata', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+
+    .learn-card-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .learn-card-bottom {
+      padding: 1rem 1.75rem 1.5rem;
+    }
+
+    .learn-card-desc {
+      font-size: 0.85rem;
+      color: var(--text2);
+      line-height: 1.65;
+      margin-bottom: 1rem;
+    }
+
+    .learn-card-cta {
+      font-family: 'Inconsolata', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .learn-card-cta::after { content: '→'; transition: transform 0.2s; }
+    .learn-card:hover .learn-card-cta::after { transform: translateX(4px); }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(45,36,24,0.55);
+      backdrop-filter: blur(6px);
+      z-index: 300;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: 0 30px 80px rgba(45,36,24,0.25);
+      width: 100%;
+      max-width: 680px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: modalIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.92) translateY(20px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    .modal-header {
+      padding: 1.75rem 2rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .modal-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.7rem;
+      flex-shrink: 0;
+    }
+
+    .modal-header-text { flex: 1; }
+
+    .modal-category {
+      font-family: 'Inconsolata', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+
+    .modal-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--text);
+    }
+
+    .modal-close {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .modal-close:hover { background: var(--rose-bg); color: var(--rose); border-color: var(--rose); }
+
+    .modal-body {
+      overflow-y: auto;
+      padding: 2rem;
+      flex: 1;
+    }
+
+    .modal-body::-webkit-scrollbar { width: 4px; }
+    .modal-body::-webkit-scrollbar-track { background: transparent; }
+    .modal-body::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+
+    /* QUIZ INSIDE MODAL */
+    .quiz-section {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .quiz-label {
+      font-family: 'Inconsolata', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--amber);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .quiz-question {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+      line-height: 1.4;
+    }
+
+    .quiz-options { display: flex; flex-direction: column; gap: 0.65rem; }
+
+    .quiz-option {
+      background: var(--bg2);
+      border: 1.5px solid var(--border);
+      color: var(--text);
+      padding: 0.9rem 1.25rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: 'Lora', serif;
+      font-size: 0.88rem;
+      text-align: left;
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+      line-height: 1.5;
+    }
+
+    .quiz-option:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-bg); transform: translateX(4px); }
+    .quiz-option.correct { border-color: var(--accent); background: var(--accent-bg); color: var(--accent); }
+    .quiz-option.wrong   { border-color: var(--rose);  background: var(--rose-bg);   color: var(--rose); }
+    .quiz-option:disabled { cursor: default; }
+
+    .quiz-feedback {
+      margin-top: 1rem;
+      padding: 1rem 1.25rem;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      display: none;
+    }
+
+    .quiz-feedback.show { display: block; }
+    .quiz-feedback.correct { background: var(--accent-bg); border: 1px solid rgba(92,122,62,0.25); color: var(--accent); }
+    .quiz-feedback.wrong   { background: var(--rose-bg);   border: 1px solid rgba(184,79,79,0.25); color: var(--rose); }
+
+    .quiz-next-btn {
+      margin-top: 1rem;
+      background: var(--accent);
+      color: #f5f0e8;
+      border: none;
+      padding: 0.75rem 1.75rem;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background 0.2s, transform 0.2s;
+      display: none;
+    }
+
+    .quiz-next-btn.show { display: inline-block; }
+    .quiz-next-btn:hover { background: var(--accent-lt); transform: translateY(-2px); }
+
+    .quiz-progress {
+      font-family: 'Inconsolata', monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.8rem;
+    }
+
+    .quiz-complete {
+      text-align: center;
+      padding: 2rem;
+      display: none;
+    }
+
+    .quiz-complete.show { display: block; }
+    .quiz-score { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 2.5rem; color: var(--accent); }
+    .quiz-score-label { font-family: 'Inconsolata', monospace; font-size: 0.7rem; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; margin-bottom: 0.5rem; }
+    .quiz-complete-msg { font-size: 0.9rem; color: var(--text2); line-height: 1.6; margin-top: 0.75rem; }
+
+    /* CONTENT STYLES */
+    .content-section { margin-bottom: 2rem; }
+    .content-section h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .content-section p { font-size: 0.9rem; color: var(--text2); line-height: 1.75; margin-bottom: 0.75rem; }
+
+    .info-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+    }
+
+    .info-box p { font-size: 0.85rem; color: var(--text2); margin: 0; line-height: 1.6; }
+    .info-box strong { color: var(--accent); }
+
+    .warn-box {
+      background: var(--amber-bg);
+      border: 1px solid rgba(196,124,43,0.3);
+      border-left: 3px solid var(--amber);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+    }
+
+    .warn-box p { font-size: 0.85rem; color: var(--text2); margin: 0; line-height: 1.6; }
+    .warn-box strong { color: var(--amber); }
+
+    .step-list { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; margin: 1rem 0; }
+    .step-list li {
+      display: flex;
+      gap: 0.85rem;
+      align-items: flex-start;
+      font-size: 0.88rem;
+      color: var(--text2);
+      line-height: 1.65;
+    }
+
+    .step-list li::before {
+      content: attr(data-n);
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 0.75rem;
+      color: var(--accent);
+      background: var(--accent-bg);
+      border: 1px solid rgba(92,122,62,0.2);
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .calc-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1.25rem 0;
+    }
+
+    .calc-box label { font-family: 'Inconsolata', monospace; font-size: 0.68rem; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; display: block; margin-bottom: 0.4rem; }
+    .calc-box input { background: var(--surface); border: 1.5px solid var(--border); color: var(--text); font-family: 'Inconsolata', monospace; font-size: 1rem; padding: 0.65rem 0.9rem; border-radius: 8px; outline: none; transition: border-color 0.2s; width: 100%; margin-bottom: 1rem; -moz-appearance: textfield; }
+    .calc-box input::-webkit-outer-spin-button, .calc-box input::-webkit-inner-spin-button { -webkit-appearance: none; }
+    .calc-box input:focus { border-color: var(--accent); }
+    .calc-result { font-family: 'Inconsolata', monospace; font-size: 0.85rem; color: var(--text2); padding: 0.75rem 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; line-height: 1.6; }
+    .calc-result strong { color: var(--accent); font-size: 1.1rem; }
+
+    .calc-btn {
+      background: var(--accent);
+      color: #f5f0e8;
+      border: none;
+      padding: 0.65rem 1.4rem;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background 0.2s;
+      margin-bottom: 1rem;
+    }
+
+    .calc-btn:hover { background: var(--accent-lt); }
+
+    /* APP SECTION */
+    .app-section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2rem 2rem 8rem;
+    }
+
+    .app-divider {
+      text-align: center;
+      padding: 3rem 2rem 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .step {
+      margin-bottom: 3rem;
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .step.visible { opacity: 1; transform: none; }
+
+    .step-label {
+      font-family: 'Inconsolata', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .step-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .step-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.7rem; margin-bottom: 1.4rem; color: var(--text); }
+
+    .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 2rem; box-shadow: 0 2px 12px var(--shadow); }
+
+    .income-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    @media (max-width: 600px) { .income-grid { grid-template-columns: 1fr; } }
+
+    .field-group { display: flex; flex-direction: column; gap: 0.55rem; }
+
+    label { font-family: 'Inconsolata', monospace; font-size: 0.7rem; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; }
+
+    input[type="number"], input[type="text"] {
+      background: var(--bg2);
+      border: 1.5px solid var(--border);
+      color: var(--text);
+      font-family: 'Inconsolata', monospace;
+      font-size: 1.1rem;
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+      -moz-appearance: textfield;
+    }
+
+    input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; }
+    input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(92,122,62,0.12); }
+
+    .expense-list { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.25rem; }
+
+    .expense-row { display: grid; grid-template-columns: 1fr 140px 38px; gap: 0.75rem; align-items: center; }
+
+    .remove-btn { background: transparent; border: 1.5px solid var(--border); color: var(--muted); width: 38px; height: 38px; border-radius: 8px; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: border-color 0.2s, color 0.2s, background 0.2s; flex-shrink: 0; }
+    .remove-btn:hover { border-color: var(--rose); color: var(--rose); background: var(--rose-bg); }
+
+    .add-expense-btn { background: transparent; border: 1.5px dashed var(--border2); color: var(--muted); padding: 0.75rem 1.2rem; border-radius: 8px; cursor: pointer; font-family: 'Inconsolata', monospace; font-size: 0.8rem; letter-spacing: 0.08em; transition: border-color 0.2s, color 0.2s, background 0.2s; width: 100%; }
+    .add-expense-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
+
+    .savings-row { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+    input[type="range"] { flex: 1; min-width: 200px; accent-color: var(--accent); cursor: pointer; height: 5px; }
+    .savings-display { font-family: 'Inconsolata', monospace; font-size: 1.5rem; font-weight: 600; color: var(--accent); min-width: 100px; text-align: right; }
+
+    .analyze-btn { width: 100%; background: var(--accent); color: #f5f0e8; border: none; padding: 1.2rem; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; border-radius: 10px; transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s, background 0.2s; margin-top: 0.5rem; }
+    .analyze-btn:hover { background: var(--accent-lt); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(92,122,62,0.28); }
+    .analyze-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    #results { margin-top: 3rem; display: none; }
+    #results.show { display: block; }
+
+    .budget-overview { display: grid; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+
+    .budget-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.4rem; position: relative; overflow: hidden; box-shadow: 0 2px 8px var(--shadow); }
+    .budget-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: 12px 12px 0 0; }
+    .budget-card.green::before { background: var(--accent); }
+    .budget-card.blue::before  { background: var(--sky); }
+    .budget-card.red::before   { background: var(--rose); }
+    .budget-card.warn::before  { background: var(--amber); }
+    .budget-card-label { font-family: 'Inconsolata', monospace; font-size: 0.62rem; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; margin-bottom: 0.6rem; }
+    .budget-card-value { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.5rem; }
+    .budget-card.green .budget-card-value { color: var(--accent); }
+    .budget-card.blue .budget-card-value  { color: var(--sky); }
+    .budget-card.red .budget-card-value   { color: var(--rose); }
+    .budget-card.warn .budget-card-value  { color: var(--amber); }
+
+    .breakdown-bar { height: 10px; background: var(--surface2); border-radius: 100px; margin-bottom: 1.5rem; display: flex; overflow: hidden; border: 1px solid var(--border); }
+    .bar-segment { height: 100%; transition: width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    .breakdown-legend { display: flex; flex-wrap: wrap; gap: 0.6rem 1.5rem; margin-bottom: 2rem; }
+    .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: 'Inconsolata', monospace; font-size: 0.72rem; color: var(--text2); }
+    .legend-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+
+    .suggestions-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+    .ai-badge { font-family: 'Inconsolata', monospace; font-size: 0.6rem; letter-spacing: 0.15em; background: var(--accent-bg); color: var(--accent); border: 1px solid rgba(92,122,62,0.3); padding: 0.2rem 0.7rem; border-radius: 100px; text-transform: uppercase; }
+    .suggestion-cards { display: flex; flex-direction: column; gap: 1rem; }
+
+    .suggestion-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; display: flex; gap: 1.25rem; align-items: flex-start; opacity: 0; transform: translateX(-18px); transition: opacity 0.5s ease, transform 0.5s ease; box-shadow: 0 2px 8px var(--shadow); }
+    .suggestion-card.visible { opacity: 1; transform: none; }
+
+    .sug-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+    .sug-icon.green { background: var(--accent-bg); border: 1px solid rgba(92,122,62,0.2); }
+    .sug-icon.blue  { background: var(--sky-bg);    border: 1px solid rgba(58,107,138,0.2); }
+    .sug-icon.warn  { background: var(--amber-bg);  border: 1px solid rgba(196,124,43,0.2); }
+    .sug-icon.red   { background: var(--rose-bg);   border: 1px solid rgba(184,79,79,0.2); }
+
+    .sug-body { flex: 1; }
+    .sug-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem; color: var(--text); }
+    .sug-text { font-size: 0.9rem; color: var(--text2); line-height: 1.7; }
+    .sug-impact { font-family: 'Inconsolata', monospace; font-size: 0.72rem; color: var(--accent); margin-top: 0.6rem; font-weight: 600; }
+
+    .action-plan { margin-top: 3rem; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 2rem; box-shadow: 0 2px 12px var(--shadow); }
+    .action-plan-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; }
+    .action-plan-header h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.2rem; color: var(--text); }
+    .plan-badge { font-family: 'Inconsolata', monospace; font-size: 0.6rem; letter-spacing: 0.15em; background: var(--amber-bg); color: var(--amber); border: 1px solid rgba(196,124,43,0.3); padding: 0.2rem 0.7rem; border-radius: 100px; text-transform: uppercase; }
+    .action-steps { display: flex; flex-direction: column; gap: 0.85rem; }
+
+    .action-step { display: flex; gap: 1rem; align-items: flex-start; padding: 1rem 1.25rem; background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; opacity: 0; transform: translateY(12px); transition: opacity 0.4s ease, transform 0.4s ease; }
+    .action-step.visible { opacity: 1; transform: none; }
+    .action-step-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; color: var(--border2); line-height: 1; min-width: 28px; }
+    .action-step-content { flex: 1; }
+    .action-step-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem; color: var(--text); margin-bottom: 0.25rem; }
+    .action-step-desc { font-size: 0.85rem; color: var(--text2); line-height: 1.65; }
+    .action-step-tag { font-family: 'Inconsolata', monospace; font-size: 0.62rem; letter-spacing: 0.1em; padding: 0.2rem 0.6rem; border-radius: 100px; margin-top: 0.5rem; display: inline-block; text-transform: uppercase; }
+    .action-step-tag.now  { background: var(--rose-bg);  color: var(--rose);  border: 1px solid rgba(184,79,79,0.25); }
+    .action-step-tag.soon { background: var(--amber-bg); color: var(--amber); border: 1px solid rgba(196,124,43,0.25); }
+    .action-step-tag.long { background: var(--sky-bg);   color: var(--sky);   border: 1px solid rgba(58,107,138,0.25); }
+
+    .loading { display: none; flex-direction: column; align-items: center; gap: 1.2rem; padding: 3rem; text-align: center; }
+    .loading.show { display: flex; }
+    .loader-ring { width: 50px; height: 50px; border: 2.5px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.9s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { font-family: 'Inconsolata', monospace; font-size: 0.75rem; letter-spacing: 0.12em; color: var(--muted); }
+
+    /* CHATBOT */
+    .chat-overlay { position: fixed; inset: 0; background: rgba(45,36,24,0.4); backdrop-filter: blur(4px); z-index: 200; display: none; align-items: flex-end; justify-content: flex-end; padding: 5rem 2rem 2rem; }
+    .chat-overlay.open { display: flex; }
+    .chat-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 20px 60px rgba(45,36,24,0.2); width: 100%; max-width: 440px; height: 560px; display: flex; flex-direction: column; overflow: hidden; animation: slideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(30px) scale(0.96); } to { opacity: 1; transform: none; } }
+    .chat-header { background: var(--accent); padding: 1.1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+    .chat-header-info { display: flex; align-items: center; gap: 0.75rem; }
+    .chat-avatar { width: 36px; height: 36px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+    .chat-header-text h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; color: #f5f0e8; }
+    .chat-header-text p { font-family: 'Inconsolata', monospace; font-size: 0.65rem; color: rgba(245,240,232,0.7); letter-spacing: 0.08em; }
+    .chat-close-btn { background: transparent; border: none; color: rgba(245,240,232,0.8); cursor: pointer; font-size: 1.3rem; line-height: 1; padding: 0.2rem; transition: color 0.2s; }
+    .chat-close-btn:hover { color: #f5f0e8; }
+    .chat-messages { flex: 1; overflow-y: auto; padding: 1.25rem; display: flex; flex-direction: column; gap: 0.85rem; scroll-behavior: smooth; }
+    .chat-messages::-webkit-scrollbar { width: 4px; }
+    .chat-messages::-webkit-scrollbar-track { background: transparent; }
+    .chat-messages::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+    .msg { max-width: 84%; padding: 0.75rem 1rem; border-radius: 12px; font-size: 0.88rem; line-height: 1.6; }
+    .msg.bot { background: var(--bg2); border: 1px solid var(--border); color: var(--text); align-self: flex-start; border-bottom-left-radius: 4px; }
+    .msg.user { background: var(--accent); color: #f5f0e8; align-self: flex-end; border-bottom-right-radius: 4px; }
+    .msg.typing { background: var(--bg2); border: 1px solid var(--border); align-self: flex-start; border-bottom-left-radius: 4px; display: flex; gap: 5px; align-items: center; padding: 1rem; }
+    .typing-dot { width: 7px; height: 7px; background: var(--muted); border-radius: 50%; animation: typingBounce 1.4s ease-in-out infinite; }
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typingBounce { 0%, 60%, 100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-6px); opacity: 1; } }
+    .chat-input-area { padding: 1rem 1.25rem; border-top: 1px solid var(--border); display: flex; gap: 0.75rem; background: var(--surface); }
+    .chat-input { flex: 1; background: var(--bg2); border: 1.5px solid var(--border); color: var(--text); font-family: 'Lora', serif; font-size: 0.88rem; padding: 0.7rem 1rem; border-radius: 8px; outline: none; transition: border-color 0.2s; }
+    .chat-input:focus { border-color: var(--accent); }
+    .chat-send-btn { background: var(--accent); color: #f5f0e8; border: none; padding: 0.7rem 1.1rem; border-radius: 8px; cursor: pointer; font-size: 1rem; transition: background 0.2s, transform 0.15s; flex-shrink: 0; }
+    .chat-send-btn:hover { background: var(--accent-lt); transform: scale(1.05); }
+    .chat-send-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    .chat-fab { position: fixed; bottom: 2rem; right: 2rem; z-index: 150; background: var(--accent); color: #f5f0e8; border: none; width: 58px; height: 58px; border-radius: 50%; cursor: pointer; font-size: 1.4rem; box-shadow: 0 8px 24px rgba(92,122,62,0.35); transition: transform 0.2s, box-shadow 0.2s, background 0.2s; display: flex; align-items: center; justify-content: center; }
+    .chat-fab:hover { background: var(--accent-lt); transform: scale(1.08); box-shadow: 0 12px 32px rgba(92,122,62,0.45); }
+    .chat-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0 1.25rem 0.75rem; }
+    .chip { font-family: 'Inconsolata', monospace; font-size: 0.7rem; letter-spacing: 0.06em; background: var(--bg2); border: 1px solid var(--border2); color: var(--text2); padding: 0.35rem 0.8rem; border-radius: 100px; cursor: pointer; transition: background 0.2s, border-color 0.2s, color 0.2s; }
+    .chip:hover { background: var(--accent-bg); border-color: var(--accent); color: var(--accent); }
+
+    footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-family: 'Inconsolata', monospace; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--muted); background: var(--surface); }
+
+    @media (max-width: 500px) {
+      .expense-row { grid-template-columns: 1fr 100px 38px; }
+      .chat-panel { height: 480px; }
+      nav { padding: 0.9rem 1.25rem; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <span class="nav-logo">✦ Ekonomicoachen</span>
+    <div class="nav-links">
+      <a href="#learn" class="nav-link">📚 Lär dig mer</a>
+      <a href="#app" class="nav-link">🧮 Budgetanalys</a>
+    </div>
+    <button class="nav-chat-btn" onclick="openChat()">💬 Fråga AI</button>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-decoration">
+      <div class="hero-circle hero-circle-1"></div>
+      <div class="hero-circle hero-circle-2"></div>
+      <div class="hero-circle hero-circle-3"></div>
+    </div>
+    <span class="hero-tag">✦ Din personliga ekonomicoach</span>
+    <h1>Din ekonomi.<br><em>Blomstrar.</em></h1>
+    <p class="hero-sub">Lär dig hur ekonomi fungerar på riktigt – fakturor, skatt, bolån och sparande – och planera sedan din egen budget med AI-stöd.</p>
+    <div class="hero-buttons">
+      <a href="#learn" class="cta-btn">📚 Börja lära →</a>
+      <a href="#app" class="cta-btn-outline">🧮 Analysera budget</a>
+    </div>
+    <div class="scroll-hint">
+      <span>SKROLLA</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ══════════ LEARN SECTION ══════════ -->
+  <section class="learn-section" id="learn">
+    <div class="section-header">
+      <div class="section-tag">📚 Ekonomiskolan</div>
+      <h2 class="section-title">Lär dig hur ekonomi fungerar</h2>
+      <p class="section-sub">Klicka på ett ämne för att lära dig grunderna – och testa dina kunskaper med ett kort quiz!</p>
+    </div>
+
+    <div class="learn-grid" id="learnGrid">
+
+      <div class="learn-card" data-topic="faktura" onclick="openLearn('faktura')">
+        <div class="learn-card-top">
+          <div class="learn-card-icon" style="background:var(--amber-bg);border:1px solid rgba(196,124,43,0.2)">📄</div>
+          <div class="learn-card-info">
+            <p class="learn-card-category" style="color:var(--amber)">Betalningar</p>
+            <h3 class="learn-card-title">Hur betalar man en faktura?</h3>
+          </div>
+        </div>
+        <div class="learn-card-bottom">
+          <p class="learn-card-desc">Förstå betalningsreferenser, förfallodatum, påminnelseavgifter och vad som händer om du missar betalning.</p>
+          <span class="learn-card-cta">Läs & quiza</span>
+        </div>
+      </div>
+
+      <div class="learn-card" data-topic="skatt" onclick="openLearn('skatt')">
+        <div class="learn-card-top">
+          <div class="learn-card-icon" style="background:var(--sky-bg);border:1px solid rgba(58,107,138,0.2)">🏛️</div>
+          <div class="learn-card-info">
+            <p class="learn-card-category" style="color:var(--sky)">Skatter</p>
+            <h3 class="learn-card-title">Hur fungerar skatten i Sverige?</h3>
+          </div>
+        </div>
+        <div class="learn-card-bottom">
+          <p class="learn-card-desc">Förstå inkomstskatt, preliminärskatt, skattedeklarationen och hur du undviker att betala restskatt.</p>
+          <span class="learn-card-cta">Läs & quiza</span>
+        </div>
+      </div>
+
+      <div class="learn-card" data-topic="bolan" onclick="openLearn('bolan')">
+        <div class="learn-card-top">
+          <div class="learn-card-icon" style="background:var(--accent-bg);border:1px solid rgba(92,122,62,0.2)">🏠</div>
+          <div class="learn-card-info">
+            <p class="learn-card-category" style="color:var(--accent)">Bostadslån</p>
+            <h3 class="learn-card-title">Vad är ett bolån?</h3>
+          </div>
+        </div>
+        <div class="learn-card-bottom">
+          <p class="learn-card-desc">Lär dig om kontantinsats, amortering, ränta, bolånetak och hur du räknar ut vad du har råd att låna.</p>
+          <span class="learn-card-cta">Läs & quiza</span>
+        </div>
+      </div>
+
+      <div class="learn-card" data-topic="sparande" onclick="openLearn('sparande')">
+        <div class="learn-card-top">
+          <div class="learn-card-icon" style="background:var(--rose-bg);border:1px solid rgba(184,79,79,0.2)">🌱</div>
+          <div class="learn-card-info">
+            <p class="learn-card-category" style="color:var(--rose)">Sparande</p>
+            <h3 class="learn-card-title">ISK, fonder & buffert</h3>
+          </div>
+        </div>
+        <div class="learn-card-bottom">
+          <p class="learn-card-desc">Förstå skillnaden på sparkonto, ISK och fonder – och varför en buffert på 3 månaders utgifter är ett viktigt mål.</p>
+          <span class="learn-card-cta">Läs & quiza</span>
+        </div>
+      </div>
+
+      <div class="learn-card" data-topic="budget" onclick="openLearn('budget')">
+        <div class="learn-card-top">
+          <div class="learn-card-icon" style="background:var(--amber-bg);border:1px solid rgba(196,124,43,0.2)">📊</div>
+          <div class="learn-card-info">
+            <p class="learn-card-category" style="color:var(--amber)">Budgetering</p>
+            <h3 class="learn-card-title">Hur gör man en budget?</h3>
+          </div>
+        </div>
+        <div class="learn-card-bottom">
+          <p class="learn-card-desc">Lär dig 50/30/20-regeln och andra metoder för att fördela din inkomst på ett smart sätt.</p>
+          <span class="learn-card-cta">Läs & quiza</span>
+        </div>
+      </div>
+
+      <div class="learn-card" data-topic="kredit" onclick="openLearn('kredit')">
+        <div class="learn-card-top">
+          <div class="learn-card-icon" style="background:var(--sky-bg);border:1px solid rgba(58,107,138,0.2)">💳</div>
+          <div class="learn-card-info">
+            <p class="learn-card-category" style="color:var(--sky)">Kredit & lån</p>
+            <h3 class="learn-card-title">Kreditupplysning & skulder</h3>
+          </div>
+        </div>
+        <div class="learn-card-bottom">
+          <p class="learn-card-desc">Förstå vad en kreditupplysning är, hur UC fungerar, och varför det är viktigt att undvika skulder hos Kronofogden.</p>
+          <span class="learn-card-cta">Läs & quiza</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════ APP SECTION ══════════ -->
+  <div class="app-divider" id="app">
+    <div class="section-tag">🧮 Budgetverktyget</div>
+    <h2 class="section-title" style="font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.8rem,4vw,2.8rem);color:var(--text);margin-top:0.8rem">Analysera din ekonomi</h2>
+    <p class="section-sub" style="color:var(--text2);font-size:0.95rem;max-width:480px;margin:0.8rem auto 0;line-height:1.7">Fyll i dina siffror och få personliga råd från AI.</p>
+  </div>
+
+  <main class="app-section">
+
+    <div class="step" id="step1">
+      <p class="step-label">Steg 01</p>
+      <h2 class="step-title">Vad är din inkomst?</h2>
+      <div class="panel">
+        <div class="income-grid">
+          <div class="field-group">
+            <label for="salary">Månadslön / CSN (kr)</label>
+            <input type="number" id="salary" placeholder="25 000" min="0" />
+          </div>
+          <div class="field-group">
+            <label for="extra">Övrig inkomst (kr)</label>
+            <input type="number" id="extra" placeholder="0" min="0" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step2">
+      <p class="step-label">Steg 02</p>
+      <h2 class="step-title">Hur mycket vill du spara?</h2>
+      <div class="panel">
+        <div class="field-group" style="margin-bottom:1.5rem;">
+          <label>Sparmål per månad</label>
+          <div class="savings-row">
+            <input type="range" id="savingsSlider" min="0" max="20000" step="100" value="2000" />
+            <div class="savings-display" id="savingsDisplay">2 000 kr</div>
+          </div>
+        </div>
+        <div class="field-group">
+          <label for="savingsGoal">Sparmål (fritext, valfritt)</label>
+          <input type="text" id="savingsGoal" placeholder="t.ex. buffert, resa, bostad..." />
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step3">
+      <p class="step-label">Steg 03</p>
+      <h2 class="step-title">Vad spenderar du på?</h2>
+      <div class="panel">
+        <div class="expense-list" id="expenseList"></div>
+        <button class="add-expense-btn" id="addExpenseBtn">+ Lägg till utgift</button>
+      </div>
+    </div>
+
+    <div class="step" id="step4">
+      <button class="analyze-btn" id="analyzeBtn">✦ Analysera min ekonomi</button>
+    </div>
+
+    <div class="loading" id="loading">
+      <div class="loader-ring"></div>
+      <p class="loading-text">ANALYSERAR DIN EKONOMI…</p>
+    </div>
+
+    <div id="results">
+      <div class="step visible">
+        <p class="step-label">Översikt</p>
+        <h2 class="step-title">Din ekonomiska bild</h2>
+        <div class="budget-overview" id="budgetOverview"></div>
+        <div class="breakdown-bar" id="breakdownBar"></div>
+        <div class="breakdown-legend" id="breakdownLegend"></div>
+      </div>
+      <div class="step visible">
+        <div class="suggestions-header">
+          <p class="step-label" style="margin-bottom:0">Råd &amp; förslag</p>
+          <span class="ai-badge">AI-analys</span>
+        </div>
+        <div class="suggestion-cards" id="suggestionCards"></div>
+      </div>
+      <div class="action-plan" id="actionPlan" style="display:none;">
+        <div class="action-plan-header">
+          <h3>Din handlingsplan</h3>
+          <span class="plan-badge">Steg för steg</span>
+        </div>
+        <div class="action-steps" id="actionSteps"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>✦ Ekonomicoachen — Byggt för att hjälpa dig nå ekonomisk frihet</footer>
+
+  <button class="chat-fab" onclick="openChat()" title="Fråga ekonomicoachen">💬</button>
+
+  <div class="chat-overlay" id="chatOverlay" onclick="handleOverlayClick(event)">
+    <div class="chat-panel" id="chatPanel">
+      <div class="chat-header">
+        <div class="chat-header-info">
+          <div class="chat-avatar">🌿</div>
+          <div class="chat-header-text">
+            <h4>Ekonomicoachen</h4>
+            <p>AI-driven rådgivning · alltid tillgänglig</p>
+          </div>
+        </div>
+        <button class="chat-close-btn" onclick="closeChat()">✕</button>
+      </div>
+      <div class="chat-messages" id="chatMessages">
+        <div class="msg bot">Hej! 👋 Jag är din ekonomicoach. Fråga mig om allt – fakturor, skatt, bolån, sparande eller din budget. Vad undrar du?</div>
+      </div>
+      <div class="chat-chips" id="chatChips">
+        <button class="chip" onclick="sendChip('Hur betalar jag en faktura?')">Faktura</button>
+        <button class="chip" onclick="sendChip('Hur fungerar skatten?')">Skatt</button>
+        <button class="chip" onclick="sendChip('Vad är ett ISK-konto?')">ISK</button>
+        <button class="chip" onclick="sendChip('Hur tar man ett bolån?')">Bolån</button>
+      </div>
+      <div class="chat-input-area">
+        <input type="text" class="chat-input" id="chatInput" placeholder="Skriv din fråga..." onkeydown="handleChatKey(event)" />
+        <button class="chat-send-btn" id="chatSendBtn" onclick="sendChatMessage()">➤</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ LEARN MODAL ══════════ -->
+  <div class="modal-overlay" id="learnModal" onclick="handleModalClick(event)">
+    <div class="modal" id="learnModalPanel">
+      <div class="modal-header">
+        <div class="modal-icon" id="modalIcon"></div>
+        <div class="modal-header-text">
+          <p class="modal-category" id="modalCategory"></p>
+          <h2 class="modal-title" id="modalTitle"></h2>
+        </div>
+        <button class="modal-close" onclick="closeLearn()">✕</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <script>
+    // ═══════════════════════════════════════════════════
+    // LEARN DATA
+    // ═══════════════════════════════════════════════════
+    const LEARN_DATA = {
+      faktura: {
+        icon: '📄',
+        color: 'var(--amber)',
+        bg: 'var(--amber-bg)',
+        border: 'rgba(196,124,43,0.2)',
+        category: 'Betalningar',
+        title: 'Hur betalar man en faktura?',
+        content: `
+          <div class="content-section">
+            <h3>Vad är en faktura?</h3>
+            <p>En faktura är ett betalningskrav – ett dokument från ett företag eller en person som kräver betalt för en vara eller tjänst. Du kan få fakturor digitalt (e-faktura eller PDF via mail) eller på papper hem i brevlådan.</p>
+            <div class="info-box"><p><strong>På fakturan hittar du alltid:</strong> Mottagarens namn och adress, fakturadatum, förfallodatum (sista betaldag), belopp, bankgiro- eller plusgironummer samt OCR-nummer (betalningsreferensen).</p></div>
+          </div>
+          <div class="content-section">
+            <h3>Steg för steg: Så betalar du</h3>
+            <ol class="step-list">
+              <li data-n="1">Öppna din bank-app eller gå till din banks hemsida och logga in med BankID.</li>
+              <li data-n="2">Välj "Betala" eller "Betalningar" och sedan "Betala räkning" eller "Bankgiro/Plusgiro".</li>
+              <li data-n="3">Ange bankgiro- eller plusgironumret som står på fakturan.</li>
+              <li data-n="4">Ange OCR-numret (ibland kallat "referens" eller "betalningsreferens"). Det är viktigt – annars vet inte mottagaren att det är du som betalat!</li>
+              <li data-n="5">Ange beloppet och välj betalningsdatum (senast på förfallodatumet).</li>
+              <li data-n="6">Bekräfta med BankID.</li>
+            </ol>
+          </div>
+          <div class="content-section">
+            <h3>Vad händer om jag inte betalar i tid?</h3>
+            <p>Om du missar förfallodatumet händer detta stegvis:</p>
+            <ul class="step-list">
+              <li data-n="1"><strong>Påminnelsefaktura</strong> – du får en ny faktura med en avgift på upp till 60 kr plus dröjsmålsränta.</li>
+              <li data-n="2"><strong>Inkassovarning</strong> – om du inte betalar skickas ärendet till ett inkassobolag. Fler avgifter tillkommer.</li>
+              <li data-n="3"><strong>Kronofogden</strong> – betalar du fortfarande inte kan du få en betalningsanmärkning. Det syns i 3 år och försvårar till exempel att hyra lägenhet eller ta lån.</li>
+            </ul>
+            <div class="warn-box"><p><strong>Tips:</strong> Kontakta alltid avsändaren om du inte kan betala! De flesta företag erbjuder delbetalning eller anstånd om du hör av dig i tid.</p></div>
+          </div>
+          <div class="content-section">
+            <h3>Autogiro – slipp glömma</h3>
+            <p>Du kan anmäla autogiro för fasta räkningar (el, hyra, telefon). Då dras pengarna automatiskt på förfallodagen. Perfekt för att aldrig missa en betalning!</p>
+          </div>
+        `,
+        quiz: [
+          {
+            q: 'Vad ska du alltid ange när du betalar en faktura via banken?',
+            opts: ['Ditt personnummer', 'OCR-numret (betalningsreferensen)', 'Ditt kontonummer', 'Fakturanumret'],
+            correct: 1,
+            explanation: 'Rätt! OCR-numret är din betalningsreferens – utan det vet inte avsändaren att just du har betalat. Det brukar vara ett långt siffernummer på fakturan.'
+          },
+          {
+            q: 'Vad är en betalningsanmärkning?',
+            opts: ['En notering om att du betalat i tid', 'En notering hos Kronofogden om utebliven betalning', 'En rabattkupong från banken', 'En påminnelse om att fakturan är snart förfallen'],
+            correct: 1,
+            explanation: 'Korrekt! En betalningsanmärkning registreras om Kronofogden behöver kräva in skulden åt borgenären. Den syns i 3 år och kan göra det svårt att hyra bostad eller ta lån.'
+          },
+          {
+            q: 'Hur stor är den maximala påminnelseavgiften i Sverige?',
+            opts: ['30 kr', '60 kr', '100 kr', '200 kr'],
+            correct: 1,
+            explanation: 'Rätt! Påminnelseavgiften är reglerad i lag och får max vara 60 kr per påminnelse, plus dröjsmålsränta.'
+          }
+        ]
+      },
+      skatt: {
+        icon: '🏛️',
+        color: 'var(--sky)',
+        bg: 'var(--sky-bg)',
+        border: 'rgba(58,107,138,0.2)',
+        category: 'Skatter',
+        title: 'Hur fungerar skatten i Sverige?',
+        content: `
+          <div class="content-section">
+            <h3>Vad är inkomstskatt?</h3>
+            <p>I Sverige betalar du skatt på din inkomst. Skatten finansierar sjukvård, skola, polis och mycket annat. Hur mycket skatt du betalar beror på hur mycket du tjänar och vilken kommun du bor i.</p>
+            <div class="info-box"><p><strong>Kommunalskatt</strong> är den vanligaste skatten för de flesta. Den ligger runt 30–35% av inkomsten. Utöver det finns statlig inkomstskatt på 20% extra om du tjänar mer än ca 598 000 kr/år (2024).</p></div>
+          </div>
+          <div class="content-section">
+            <h3>Preliminärskatt – vad är det?</h3>
+            <p>Din arbetsgivare drar preliminärskatt varje månad direkt från din lön innan du får den. Det är en uppskattning av hur mycket skatt du ska betala för hela året. Skatteverket justerar sedan i deklarationen.</p>
+            <ol class="step-list">
+              <li data-n="1">Du jobbar och tjänar pengar.</li>
+              <li data-n="2">Arbetsgivaren drar preliminärskatt och betalar in till Skatteverket.</li>
+              <li data-n="3">På våren deklarerar du – Skatteverket räknar ut om du betalt för mycket eller för lite.</li>
+              <li data-n="4">Om du betalt för mycket → du får <strong>skatteåterbäring</strong> (pengar tillbaka).</li>
+              <li data-n="5">Om du betalt för lite → du måste betala <strong>restskatt</strong>.</li>
+            </ol>
+          </div>
+          <div class="content-section">
+            <h3>Deklarationen</h3>
+            <p>Varje år (mars–maj) deklarerar du till Skatteverket. De flesta i Sverige kan godkänna sin deklaration med ett knapptryck i Skatteverkets app eller på skatteverket.se. Det är viktigt att du kontrollerar att uppgifterna stämmer!</p>
+            <div class="warn-box"><p><strong>Vanliga avdrag:</strong> Resor till jobbet (om du åker mer än 5 km), ränteutgifter på lån (30% avdrag), och ROT/RUT-avdrag för hantverks- och hushållstjänster.</p></div>
+          </div>
+          <div class="content-section">
+            <h3>Räkna ut din nettolön</h3>
+            <div class="calc-box">
+              <label>Bruttolön (kr/mån)</label>
+              <input type="number" id="skattBrutto" placeholder="30000" min="0" />
+              <label>Kommunalskatt (%)</label>
+              <input type="number" id="skattProcent" placeholder="32" min="0" max="40" />
+              <button class="calc-btn" onclick="calcSkatt()">Räkna ut →</button>
+              <div class="calc-result" id="skattResult">Fyll i din lön och skattesats ovan.</div>
+            </div>
+          </div>
+        `,
+        quiz: [
+          {
+            q: 'Vad kallas det när Skatteverket betalar tillbaka pengar efter deklarationen?',
+            opts: ['Restskatt', 'Skatteåterbäring', 'Preliminärskatt', 'Kommunalskatt'],
+            correct: 1,
+            explanation: 'Rätt! Skatteåterbäring får du om din arbetsgivare dragit mer preliminärskatt än du faktiskt ska betala. Pengarna betalas ut i slutet av juni vanligtvis.'
+          },
+          {
+            q: 'Hur hög är den ungefärliga kommunalskatten för de flesta i Sverige?',
+            opts: ['10–15%', '20–25%', '30–35%', '45–50%'],
+            correct: 2,
+            explanation: 'Korrekt! Kommunalskatten varierar beroende på var du bor men ligger generellt runt 30–35% av inkomsten. Det är den skatten de flesta betalar.'
+          },
+          {
+            q: 'Vad är preliminärskatt?',
+            opts: ['Skatt du betalar när du köper saker', 'En uppskattad skatt som arbetsgivaren drar varje månad', 'En extra skatt för höga inkomster', 'Skatt på vinster i aktier'],
+            correct: 1,
+            explanation: 'Rätt! Preliminärskatt är ett förskott på din inkomstskatt som arbetsgivaren betalar in åt dig. Den justeras sedan i deklarationen.'
+          }
+        ]
+      },
+      bolan: {
+        icon: '🏠',
+        color: 'var(--accent)',
+        bg: 'var(--accent-bg)',
+        border: 'rgba(92,122,62,0.2)',
+        category: 'Bostadslån',
+        title: 'Vad är ett bolån?',
+        content: `
+          <div class="content-section">
+            <h3>Vad är ett bolån?</h3>
+            <p>Ett bolån är ett lån från en bank som du använder för att köpa en bostad. Bostaden fungerar som säkerhet för lånet – det innebär att om du inte betalar tillbaka kan banken ta bostaden.</p>
+            <div class="info-box"><p><strong>Bolånetaket:</strong> I Sverige får du låna max 85% av bostadens värde. De resterande 15% kallas <strong>kontantinsats</strong> och måste du ha sparat ihop själv.</p></div>
+          </div>
+          <div class="content-section">
+            <h3>Viktiga begrepp</h3>
+            <ol class="step-list">
+              <li data-n="K"><strong>Kontantinsats</strong> – minst 15% av köpesumman som du betalar direkt. Köper du för 3 000 000 kr behöver du minst 450 000 kr i kontantinsats.</li>
+              <li data-n="R"><strong>Ränta</strong> – kostnaden för att låna pengar. Anges i % per år. Exempel: 4% ränta på 2 000 000 kr = 80 000 kr/år = ca 6 667 kr/mån.</li>
+              <li data-n="A"><strong>Amortering</strong> – den del av lånet du betalar av varje månad. Enligt lag måste du amortera om du lånar mer än 50% av bostadens värde.</li>
+              <li data-n="L"><strong>KALP-kalkyl</strong> – banken räknar om du klarar av att betala lånet även om räntan stiger till 7%. Detta kallas kvar-att-leva-på-kalkyl.</li>
+            </ol>
+          </div>
+          <div class="content-section">
+            <h3>Amorteringskrav</h3>
+            <p>Beroende på hur stort ditt lån är i förhållande till bostadens värde och din inkomst gäller olika krav:</p>
+            <ul class="step-list">
+              <li data-n="1">Lån > 70% av bostadens värde: amortera <strong>2%</strong> av lånet per år.</li>
+              <li data-n="2">Lån 50–70% av bostadens värde: amortera <strong>1%</strong> av lånet per år.</li>
+              <li data-n="3">Lån > 4,5 gånger din bruttoinkomst: ytterligare <strong>1%</strong> per år.</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <h3>Räkna ut din månadskostnad</h3>
+            <div class="calc-box">
+              <label>Bostadens pris (kr)</label>
+              <input type="number" id="bolanPris" placeholder="3000000" min="0" />
+              <label>Ränta (% per år)</label>
+              <input type="number" id="bolanRanta" placeholder="4.5" step="0.1" min="0" />
+              <button class="calc-btn" onclick="calcBolan()">Räkna ut →</button>
+              <div class="calc-result" id="bolanResult">Fyll i pris och ränta ovan.</div>
+            </div>
+          </div>
+        `,
+        quiz: [
+          {
+            q: 'Hur stor kontantinsats krävs minst vid köp av bostad i Sverige?',
+            opts: ['5% av köpesumman', '10% av köpesumman', '15% av köpesumman', '20% av köpesumman'],
+            correct: 2,
+            explanation: 'Rätt! Det svenska bolånetaket innebär att du måste ha minst 15% av bostadens pris i kontantinsats. Banken lånar ut max 85%.'
+          },
+          {
+            q: 'Vad innebär amortering?',
+            opts: ['Att betala ränta på lånet', 'Att betala tillbaka en del av själva lånebeloppet varje månad', 'Att värdera bostaden', 'Att ta ett nytt lån'],
+            correct: 1,
+            explanation: 'Korrekt! Amortering är när du betalar av på själva låneskulden. Utöver amorteringen betalar du också ränta. Tillsammans kallas det för kapitalkostnad.'
+          },
+          {
+            q: 'Vad är KALP-kalkylen?',
+            opts: ['En beräkning av bostadens marknadsvärde', 'En kontroll av om du klarar att betala lånet om räntan höjs till 7%', 'En skatteberäkning för bostadsköp', 'En kalkyl för renoveringskostnader'],
+            correct: 1,
+            explanation: 'Rätt! KALP = Kvar Att Leva På. Banken räknar om du klarar ditt lån även om räntan stiger ordentligt, för att skydda dig från att låna mer än du klarar.'
+          }
+        ]
+      },
+      sparande: {
+        icon: '🌱',
+        color: 'var(--rose)',
+        bg: 'var(--rose-bg)',
+        border: 'rgba(184,79,79,0.2)',
+        category: 'Sparande & Investering',
+        title: 'ISK, fonder & buffert',
+        content: `
+          <div class="content-section">
+            <h3>Tre nivåer av sparande</h3>
+            <p>Det finns olika sorters sparande med olika syfte och risk. Här är de tre viktigaste:</p>
+            <ol class="step-list">
+              <li data-n="1"><strong>Buffert på sparkonto</strong> – pengar du snabbt kan komma åt om något oväntat händer. Mål: 3 månaders fasta kostnader. Ingen risk.</li>
+              <li data-n="2"><strong>ISK (Investeringssparkonto)</strong> – konto där du investerar i aktier och fonder. Enkel beskattning (schablonbeskattning). Bra för medellångt sparande (3–10 år).</li>
+              <li data-n="3"><strong>Pensionssparande (IPS/tjänstepension)</strong> – långsiktigt sparande för pension. Pengarna är låsta tills du når pensionsålder.</li>
+            </ol>
+          </div>
+          <div class="content-section">
+            <h3>Vad är ett ISK?</h3>
+            <p>ISK – Investeringssparkonto – är den vanligaste sparformen för aktier och fonder i Sverige. Istället för att betala skatt på varje vinst varje år betalar du en låg schablonskatt baserad på kontots värde.</p>
+            <div class="info-box"><p><strong>Fördelar med ISK:</strong> Enkel deklaration (banken sköter det), du kan köpa och sälja fritt utan att räkna på skatt, och du kan ta ut pengarna när som helst.</p></div>
+          </div>
+          <div class="content-section">
+            <h3>Fonder – enklaste sättet att investera</h3>
+            <p>En fond är en "korg" med många aktier. Istället för att köpa enskilda aktier köper du andelar i korgen. Det sprider risken automatiskt.</p>
+            <ul class="step-list">
+              <li data-n="→"><strong>Indexfond</strong> – följer börsen automatiskt, låg avgift (0,1–0,3%). Perfekt för nybörjare.</li>
+              <li data-n="→"><strong>Aktivt förvaltad fond</strong> – en förvaltare väljer aktier. Ofta högre avgift (0,5–2%). Slår sällan index långsiktigt.</li>
+              <li data-n="→"><strong>Räntefond</strong> – investerar i lån, inte aktier. Lägre risk och lägre förväntad avkastning.</li>
+            </ul>
+          </div>
+          <div class="content-section">
+            <h3>Räkna ut din buffert</h3>
+            <div class="calc-box">
+              <label>Fasta kostnader per månad (kr)</label>
+              <input type="number" id="buffertKostnad" placeholder="12000" min="0" />
+              <button class="calc-btn" onclick="calcBuffert()">Räkna ut →</button>
+              <div class="calc-result" id="buffertResult">Fyll i dina fasta kostnader ovan.</div>
+            </div>
+          </div>
+        `,
+        quiz: [
+          {
+            q: 'Hur stor buffert rekommenderas som mål?',
+            opts: ['1 månads hyra', '1 månads fasta kostnader', '3 månaders fasta kostnader', '6 månaders lön'],
+            correct: 2,
+            explanation: 'Rätt! En buffert på 3 månaders fasta kostnader ger dig trygghet om du t.ex. förlorar jobbet, bilen går sönder eller du behöver en oplanerad tandläkarbesök.'
+          },
+          {
+            q: 'Vad är en fördel med ett ISK-konto jämfört med ett vanligt aktiekonto?',
+            opts: ['Pengarna är helt skattefria', 'Du slipper räkna vinst/förlust på varje affär – du betalar en fast schablonskatt', 'Pengarna ger garanterad avkastning', 'Du kan inte förlora pengar'],
+            correct: 1,
+            explanation: 'Korrekt! Med ISK betalar du en schablonskatt baserad på kontots värde (ca 0,9–1% per år) istället för 30% skatt på varje enskild vinst. Det förenklar drastiskt.'
+          },
+          {
+            q: 'Vad är en indexfond?',
+            opts: ['En fond som placerar i fastighetsprojekt', 'En fond som automatiskt följer ett aktieindex, som börsen i stort', 'En fond som bara investerar i ett enda bolag', 'En statlig pensionsfond'],
+            correct: 1,
+            explanation: 'Rätt! En indexfond kopierar ett aktieindex (t.ex. OMXS30 eller globala börser). Låg avgift och historiskt sett bättre än de flesta aktivt förvaltade fonder.'
+          }
+        ]
+      },
+      budget: {
+        icon: '📊',
+        color: 'var(--amber)',
+        bg: 'var(--amber-bg)',
+        border: 'rgba(196,124,43,0.2)',
+        category: 'Budgetering',
+        title: 'Hur gör man en budget?',
+        content: `
+          <div class="content-section">
+            <h3>Varför behöver du en budget?</h3>
+            <p>En budget hjälper dig att hålla koll på vad pengarna tar vägen, undvika att gå minus och jobba mot dina ekonomiska mål. Det behöver inte vara krångligt!</p>
+          </div>
+          <div class="content-section">
+            <h3>50/30/20-regeln</h3>
+            <p>Den populäraste och enklaste budgetmetoden. Du delar upp din nettoinkomst (efter skatt) i tre delar:</p>
+            <ol class="step-list">
+              <li data-n="50%"><strong>Behov</strong> – hyra, mat, transport, el, telefon. Allt du <em>måste</em> betala.</li>
+              <li data-n="30%"><strong>Önskemål</strong> – restaurang, nöje, resor, kläder, prenumerationer. Saker som gör livet roligt.</li>
+              <li data-n="20%"><strong>Sparande & skulder</strong> – buffert, ISK, bolånamortering, CSN-återbetalning.</li>
+            </ol>
+            <div class="info-box"><p><strong>Exempel:</strong> Nettoinkomst 22 000 kr/mån → Behov max 11 000 kr · Önskemål max 6 600 kr · Sparande minst 4 400 kr.</p></div>
+          </div>
+          <div class="content-section">
+            <h3>Steg för att sätta upp din budget</h3>
+            <ol class="step-list">
+              <li data-n="1">Räkna ut din <strong>nettoinkomst</strong> (lön efter skatt).</li>
+              <li data-n="2">Lista alla <strong>fasta utgifter</strong> (hyra, el, telefon, försäkringar).</li>
+              <li data-n="3">Uppskatta <strong>rörliga utgifter</strong> (mat, transport, nöje). Titta på dina kontoutdrag!</li>
+              <li data-n="4">Dra av alla utgifter från inkomsten. Vad blir <strong>överskottet</strong>?</li>
+              <li data-n="5">Bestäm hur mycket du vill spara och <strong>sätt upp autogiro</strong> direkt på lönedagen.</li>
+            </ol>
+          </div>
+          <div class="content-section">
+            <h3>Räkna din 50/30/20-fördelning</h3>
+            <div class="calc-box">
+              <label>Nettoinkomst per månad (kr)</label>
+              <input type="number" id="budgetInkomst" placeholder="22000" min="0" />
+              <button class="calc-btn" onclick="calcBudget()">Räkna ut →</button>
+              <div class="calc-result" id="budgetResult">Fyll i din nettoinkomst ovan.</div>
+            </div>
+          </div>
+        `,
+        quiz: [
+          {
+            q: 'Hur stor andel av inkomsten bör gå till sparande och skulder enligt 50/30/20-regeln?',
+            opts: ['5%', '10%', '20%', '30%'],
+            correct: 2,
+            explanation: 'Rätt! Enligt 50/30/20-regeln ska minst 20% av nettoinkomsten gå till sparande och skulder. Det är "betalning till framtida dig"!'
+          },
+          {
+            q: 'Vad räknas som ett "behov" i budgeten?',
+            opts: ['Netflix-prenumeration', 'Middag på restaurang', 'Hyra och matinköp', 'Semesterresa'],
+            correct: 2,
+            explanation: 'Korrekt! Behov är sådant du måste betala för att klara dig: boende, mat, transport till jobbet, el och telefon. Nöjen är önskemål, inte behov.'
+          },
+          {
+            q: 'Vad är det smartaste sättet att se till att du faktiskt sparar varje månad?',
+            opts: ['Spara det som blir över i slutet av månaden', 'Sätta upp autogiro som drar sparbeloppet på lönedagen', 'Köpa guldtackor', 'Vänta tills du har råd att spara'],
+            correct: 1,
+            explanation: 'Rätt! "Betala dig själv först" – sätt upp autogiro som direkt på lönedagen flyttar sparbeloppet till ett separat konto. Då spenderar du inte utan att tänka på det.'
+          }
+        ]
+      },
+      kredit: {
+        icon: '💳',
+        color: 'var(--sky)',
+        bg: 'var(--sky-bg)',
+        border: 'rgba(58,107,138,0.2)',
+        category: 'Kredit & Lån',
+        title: 'Kreditupplysning & skulder',
+        content: `
+          <div class="content-section">
+            <h3>Vad är en kreditupplysning?</h3>
+            <p>När du ansöker om ett lån, tecknar ett abonnemang eller hyr en lägenhet gör ofta motparten en kreditupplysning. Det innebär att de tittar på din ekonomiska historik för att bedöma om du kan betala.</p>
+            <div class="info-box"><p><strong>UC (Upplysningscentralen)</strong> är Sveriges vanligaste kreditupplysningsbolag. Banker och hyresvärdar använder UC för att se din skuldsättning, inkomster och eventuella betalningsanmärkningar.</p></div>
+          </div>
+          <div class="content-section">
+            <h3>Vad påverkar din kreditvärdighet?</h3>
+            <ol class="step-list">
+              <li data-n="✓"><strong>Inkomst</strong> – högre och stabil inkomst ger bättre kreditvärdighet.</li>
+              <li data-n="✓"><strong>Skulder</strong> – ju lägre skulder, desto bättre.</li>
+              <li data-n="✓"><strong>Betalningshistorik</strong> – har du betalat i tid tidigare?</li>
+              <li data-n="✗"><strong>Betalningsanmärkningar</strong> – syns i 3 år och påverkar negativt.</li>
+              <li data-n="✗"><strong>Många kreditupplysningar</strong> – om många kollar UC på kort tid kan det signalera att du är desperat efter kredit.</li>
+            </ol>
+          </div>
+          <div class="content-section">
+            <h3>Kronofogden – vad händer om du inte betalar?</h3>
+            <p>Om du inte betalar en skuld och borgenären (den som du är skyldig pengar) tar ärendet vidare kan det hamna hos Kronofogdemyndigheten.</p>
+            <ol class="step-list">
+              <li data-n="1">Kronofogden kontaktar dig med ett <strong>betalningsföreläggande</strong>.</li>
+              <li data-n="2">Betalar du inte eller bestrider du inom 10 dagar, registreras en <strong>betalningsanmärkning</strong>.</li>
+              <li data-n="3">Kronofogden kan sedan <strong>utmäta din lön</strong> – dra pengar direkt från din lön varje månad.</li>
+            </ol>
+            <div class="warn-box"><p><strong>Viktigt:</strong> En betalningsanmärkning syns i 3 år för privatpersoner. Under den tiden kan du ha svårt att hyra lägenhet, teckna mobilabonnemang eller ta lån.</p></div>
+          </div>
+          <div class="content-section">
+            <h3>Smarta råd om kredit</h3>
+            <ol class="step-list">
+              <li data-n="1">Undvik snabblån och blancolån med hög ränta (ibland 20–40%).</li>
+              <li data-n="2">Betala alltid mer än minimibeloppet på kreditkortet.</li>
+              <li data-n="3">Bygg en buffert – det är din första försvarslinje mot skulder.</li>
+              <li data-n="4">Du kan se din egen UC-fil gratis en gång per år på uc.se.</li>
+            </ol>
+          </div>
+        `,
+        quiz: [
+          {
+            q: 'Hur länge syns en betalningsanmärkning för privatpersoner i Sverige?',
+            opts: ['1 år', '3 år', '5 år', '10 år'],
+            correct: 1,
+            explanation: 'Rätt! En betalningsanmärkning syns i 3 år för privatpersoner. Det kan göra det svårt att hyra bostad, ta lån eller teckna abonnemang under den perioden.'
+          },
+          {
+            q: 'Vad är UC?',
+            opts: ['En statlig myndighet som beviljar lån', 'Sveriges vanligaste kreditupplysningsbolag', 'En bank specialiserad på unga', 'En typ av investeringskonto'],
+            correct: 1,
+            explanation: 'Korrekt! UC (Upplysningscentralen) är ett privat bolag som samlar och säljer kreditinformation. Banker, hyresvärdar och andra använder UC för att bedöma din kreditvärdighet.'
+          },
+          {
+            q: 'Vad händer om Kronofogden fastställer din skuld och du fortfarande inte betalar?',
+            opts: ['Ingenting händer mer', 'Du kan bli av med körkortet', 'Kronofogden kan dra pengar direkt från din lön (löneutmätning)', 'Skulden försvinner efter 1 år'],
+            correct: 2,
+            explanation: 'Rätt! Kronofogden kan besluta om löneutmätning – de tar en del av din lön varje månad tills skulden är betald. Det är ett av de allvarligaste ekonomiska situationerna att hamna i.'
+          }
+        ]
+      }
+    };
+
+    // ═══════════════════════════════════════════════════
+    // MODAL STATE
+    // ═══════════════════════════════════════════════════
+    let currentTopic = null;
+    let quizIndex = 0;
+    let quizScore = 0;
+    let quizAnswered = false;
+
+    function openLearn(topic) {
+      currentTopic = topic;
+      quizIndex = 0;
+      quizScore = 0;
+      quizAnswered = false;
+      const data = LEARN_DATA[topic];
+
+      document.getElementById('modalIcon').style.cssText = `background:${data.bg};border:1px solid ${data.border}`;
+      document.getElementById('modalIcon').textContent = data.icon;
+      document.getElementById('modalCategory').style.color = data.color;
+      document.getElementById('modalCategory').textContent = data.category.toUpperCase();
+      document.getElementById('modalTitle').textContent = data.title;
+
+      const body = document.getElementById('modalBody');
+      body.innerHTML = data.content + buildQuiz(topic, 0);
+
+      document.getElementById('learnModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function buildQuiz(topic, idx) {
+      const data = LEARN_DATA[topic];
+      const q = data.quiz[idx];
+      const total = data.quiz.length;
+      return `
+        <div class="quiz-section" id="quizSection">
+          <div class="quiz-label">🧠 Kunskapskollen</div>
+          <div class="quiz-progress">Fråga ${idx + 1} av ${total}</div>
+          <div class="quiz-question">${q.q}</div>
+          <div class="quiz-options" id="quizOptions">
+            ${q.opts.map((opt, i) => `<button class="quiz-option" onclick="answerQuiz(${i})">${opt}</button>`).join('')}
+          </div>
+          <div class="quiz-feedback" id="quizFeedback"></div>
+          <button class="quiz-next-btn" id="quizNextBtn" onclick="nextQuiz()">${idx + 1 < total ? 'Nästa fråga →' : 'Se resultat →'}</button>
+        </div>
+        <div class="quiz-complete" id="quizComplete">
+          <div class="quiz-score-label">Ditt resultat</div>
+          <div class="quiz-score" id="quizScoreDisplay"></div>
+          <div class="quiz-complete-msg" id="quizCompleteMsg"></div>
+          <button class="quiz-next-btn show" style="margin-top:1.25rem" onclick="restartQuiz()">🔄 Försök igen</button>
+        </div>
+      `;
+    }
+
+    function answerQuiz(selected) {
+      if (quizAnswered) return;
+      quizAnswered = true;
+      const data = LEARN_DATA[currentTopic];
+      const q = data.quiz[quizIndex];
+      const options = document.querySelectorAll('.quiz-option');
+      const feedback = document.getElementById('quizFeedback');
+      const nextBtn = document.getElementById('quizNextBtn');
+
+      options.forEach((btn, i) => {
+        btn.disabled = true;
+        if (i === q.correct) btn.classList.add('correct');
+        else if (i === selected && selected !== q.correct) btn.classList.add('wrong');
+      });
+
+      if (selected === q.correct) {
+        quizScore++;
+        feedback.textContent = '✓ Rätt! ' + q.explanation;
+        feedback.className = 'quiz-feedback show correct';
+      } else {
+        feedback.textContent = '✗ Inte riktigt. ' + q.explanation;
+        feedback.className = 'quiz-feedback show wrong';
+      }
+
+      nextBtn.classList.add('show');
+    }
+
+    function nextQuiz() {
+      const data = LEARN_DATA[currentTopic];
+      quizIndex++;
+      quizAnswered = false;
+
+      if (quizIndex >= data.quiz.length) {
+        const section = document.getElementById('quizSection');
+        const complete = document.getElementById('quizComplete');
+        section.style.display = 'none';
+        complete.classList.add('show');
+        const pct = Math.round((quizScore / data.quiz.length) * 100);
+        document.getElementById('quizScoreDisplay').textContent = quizScore + '/' + data.quiz.length;
+        const msgs = ['Inte riktigt. Läs igenom guiden en gång till!', 'Bra försök! Lite mer läsning så sitter det.', 'Bra jobbat! Du kan grunderna.', 'Utmärkt! Du är en ekonomipro!'];
+        document.getElementById('quizCompleteMsg').textContent = pct < 40 ? msgs[0] : pct < 67 ? msgs[1] : pct < 100 ? msgs[2] : msgs[3];
+        return;
+      }
+
+      // rebuild quiz with new question
+      const quizSection = document.getElementById('quizSection');
+      const q = data.quiz[quizIndex];
+      quizSection.querySelector('.quiz-progress').textContent = `Fråga ${quizIndex + 1} av ${data.quiz.length}`;
+      quizSection.querySelector('.quiz-question').textContent = q.q;
+      quizSection.querySelector('.quiz-options').innerHTML = q.opts.map((opt, i) => `<button class="quiz-option" onclick="answerQuiz(${i})">${opt}</button>`).join('');
+      quizSection.querySelector('#quizFeedback').className = 'quiz-feedback';
+      quizSection.querySelector('#quizNextBtn').className = 'quiz-next-btn';
+      quizSection.querySelector('#quizNextBtn').textContent = quizIndex + 1 < data.quiz.length ? 'Nästa fråga →' : 'Se resultat →';
+    }
+
+    function restartQuiz() {
+      openLearn(currentTopic);
+    }
+
+    function closeLearn() {
+      document.getElementById('learnModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function handleModalClick(e) {
+      if (e.target === document.getElementById('learnModal')) closeLearn();
+    }
+
+    // ── CALCULATORS ──
+    function calcSkatt() {
+      const brutto = parseFloat(document.getElementById('skattBrutto').value) || 0;
+      const pct = parseFloat(document.getElementById('skattProcent').value) || 32;
+      if (!brutto) { document.getElementById('skattResult').innerHTML = 'Ange din lön.'; return; }
+      const skatt = brutto * (pct / 100);
+      const netto = brutto - skatt;
+      document.getElementById('skattResult').innerHTML = `Bruttolön: <strong>${fmt(brutto)}</strong> · Skatt (${pct}%): ${fmt(skatt)} · <strong>Nettolön: ${fmt(netto)}</strong>`;
+    }
+
+    function calcBolan() {
+      const pris = parseFloat(document.getElementById('bolanPris').value) || 0;
+      const ranta = parseFloat(document.getElementById('bolanRanta').value) || 4.5;
+      if (!pris) { document.getElementById('bolanResult').innerHTML = 'Ange bostadens pris.'; return; }
+      const kontant = pris * 0.15;
+      const lan = pris * 0.85;
+      const manadsRanta = lan * (ranta / 100) / 12;
+      const amortering = lan * 0.02 / 12;
+      document.getElementById('bolanResult').innerHTML =
+        `Kontantinsats (15%): <strong>${fmt(kontant)}</strong><br>Lån (85%): ${fmt(lan)}<br>Räntekostnad/mån (${ranta}%): <strong>${fmt(manadsRanta)}</strong><br>Amortering/mån (2%/år): ${fmt(amortering)}<br><strong>Total månadskostnad: ${fmt(manadsRanta + amortering)}</strong>`;
+    }
+
+    function calcBuffert() {
+      const kostnad = parseFloat(document.getElementById('buffertKostnad').value) || 0;
+      if (!kostnad) { document.getElementById('buffertResult').innerHTML = 'Ange dina fasta kostnader.'; return; }
+      const buffert = kostnad * 3;
+      document.getElementById('buffertResult').innerHTML =
+        `Fasta kostnader: ${fmt(kostnad)}/mån<br>Rekommenderad buffert (3 mån): <strong>${fmt(buffert)}</strong><br>Sparar du ${fmt(kostnad * 0.1)}/mån är du där om ${Math.ceil(30 / 1)} månader om du sparar 10% av kostnaderna.`;
+    }
+
+    function calcBudget() {
+      const ink = parseFloat(document.getElementById('budgetInkomst').value) || 0;
+      if (!ink) { document.getElementById('budgetResult').innerHTML = 'Ange din nettoinkomst.'; return; }
+      document.getElementById('budgetResult').innerHTML =
+        `<strong>50% behov:</strong> max ${fmt(ink * 0.5)}<br><strong>30% önskemål:</strong> max ${fmt(ink * 0.3)}<br><strong>20% sparande:</strong> minst ${fmt(ink * 0.2)}`;
+    }
+
+    // ═══════════════════════════════════════════════════
+    // INTERSECTION OBSERVER FOR LEARN CARDS
+    // ═══════════════════════════════════════════════════
+    const cardObserver = new IntersectionObserver(entries => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          cardObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.learn-card').forEach(c => cardObserver.observe(c));
+
+    // ═══════════════════════════════════════════════════
+    // BUDGET APP (unchanged logic from original)
+    // ═══════════════════════════════════════════════════
+    const COLORS = ['#5c7a3e','#3a6b8a','#c47c2b','#b84f4f','#7a5c8a','#3a8a6b','#8a3a6b','#6b8a3a'];
+
+    const defaultExpenses = [
+      { name: 'Hyra / boende', amount: 8000 },
+      { name: 'Mat & dagligvaror', amount: 3000 },
+      { name: 'Transport', amount: 1200 },
+    ];
+
+    let expenses = [...defaultExpenses];
+
+    function renderExpenses() {
+      const list = document.getElementById('expenseList');
+      list.innerHTML = '';
+      expenses.forEach((exp, i) => {
+        const row = document.createElement('div');
+        row.className = 'expense-row';
+        row.innerHTML = `
+          <input type="text" placeholder="Kategori" value="${exp.name}" data-idx="${i}" data-field="name" />
+          <input type="number" placeholder="Kr/mån" value="${exp.amount}" min="0" data-idx="${i}" data-field="amount" />
+          <button class="remove-btn" data-idx="${i}" title="Ta bort">✕</button>
+        `;
+        list.appendChild(row);
+      });
+
+      list.querySelectorAll('input').forEach(inp => {
+        inp.addEventListener('input', e => {
+          const idx = +e.target.dataset.idx;
+          const field = e.target.dataset.field;
+          expenses[idx][field] = field === 'amount' ? (parseFloat(e.target.value) || 0) : e.target.value;
+        });
+      });
+
+      list.querySelectorAll('.remove-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          expenses.splice(+btn.dataset.idx, 1);
+          renderExpenses();
+        });
+      });
+    }
+
+    document.getElementById('addExpenseBtn').addEventListener('click', () => {
+      expenses.push({ name: '', amount: 0 });
+      renderExpenses();
+      const inputs = document.querySelectorAll('.expense-row input');
+      inputs[inputs.length - 2]?.focus();
+    });
+
+    renderExpenses();
+
+    const slider = document.getElementById('savingsSlider');
+    const savingsDisplay = document.getElementById('savingsDisplay');
+
+    function updateSlider() {
+      const val = parseInt(slider.value);
+      savingsDisplay.textContent = val.toLocaleString('sv-SE') + ' kr';
+      const income = getTotalIncome();
+      if (income > 0) slider.max = Math.max(20000, income);
+    }
+
+    slider.addEventListener('input', updateSlider);
+
+    function getTotalIncome() {
+      return (parseFloat(document.getElementById('salary').value) || 0)
+           + (parseFloat(document.getElementById('extra').value) || 0);
+    }
+
+    document.getElementById('salary').addEventListener('input', () => {
+      slider.max = Math.max(20000, getTotalIncome());
+      updateSlider();
+    });
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.step').forEach(s => observer.observe(s));
+
+    function fmt(n) { return Math.round(n).toLocaleString('sv-SE') + ' kr'; }
+
+    async function callClaude(messages, system) {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          system: system,
+          messages: messages
+        })
+      });
+      const data = await response.json();
+      return data.content?.find(b => b.type === 'text')?.text || '';
+    }
+
+    document.getElementById('analyzeBtn').addEventListener('click', analyze);
+
+    async function analyze() {
+      const income = getTotalIncome();
+      if (!income) { alert('Ange din inkomst för att fortsätta.'); return; }
+
+      const savingsTarget = parseInt(slider.value);
+      const savingsGoalText = document.getElementById('savingsGoal').value;
+      const totalExpenses = expenses.reduce((s, e) => s + (e.amount || 0), 0);
+      const leftover = income - totalExpenses - savingsTarget;
+
+      document.getElementById('loading').classList.add('show');
+      document.getElementById('results').classList.remove('show');
+      document.getElementById('analyzeBtn').disabled = true;
+
+      const expensesText = expenses.filter(e => e.name || e.amount).map(e => `- ${e.name || 'Övrigt'}: ${e.amount} kr`).join('\n');
+
+      const systemPrompt = `Du är en vänlig och professionell svensk ekonomirådgivare. Analysera användarens ekonomi noggrant och ge konkreta, personliga råd på svenska. Svara ENBART med ett JSON-objekt utan markdown-kod (inga backticks). Inga kommentarer utanför JSON.`;
+
+      const userMessage = `Analysera denna ekonomi:
+- Total inkomst: ${income} kr/månad
+- Sparmål: ${savingsTarget} kr/månad${savingsGoalText ? ` (${savingsGoalText})` : ''}
+- Utgifter per månad:
+${expensesText}
+- Totala utgifter: ${totalExpenses} kr
+- Kvar efter utgifter och sparande: ${leftover} kr
+
+Returnera exakt detta JSON-format:
+{
+  "suggestions": [
+    { "icon": "<emoji>", "type": "green|blue|warn|red", "title": "<kort titel>", "text": "<konkret råd, 2-3 meningar>", "impact": "<potentiell besparing eller fördel>" }
+  ],
+  "actionPlan": [
+    { "title": "<kort åtgärdsrubrik>", "desc": "<konkret, specifik handling, 1-2 meningar>", "urgency": "now|soon|long" }
+  ]
+}
+
+Ge 4-6 suggestions och 4-5 actionPlan-steg sorterade: now (denna vecka) → soon (denna månad) → long (nästa halvår+).`;
+
+      try {
+        const rawText = await callClaude([{ role: 'user', content: userMessage }], systemPrompt);
+        let parsed;
+        try { parsed = JSON.parse(rawText.replace(/```json|```/g, '').trim()); }
+        catch { parsed = { suggestions: getFallbackSuggestions(income, totalExpenses, savingsTarget, leftover), actionPlan: getFallbackPlan(income, totalExpenses, savingsTarget, leftover) }; }
+        renderResults(income, totalExpenses, savingsTarget, leftover, parsed);
+      } catch {
+        renderResults(income, totalExpenses, savingsTarget, leftover, { suggestions: getFallbackSuggestions(income, totalExpenses, savingsTarget, leftover), actionPlan: getFallbackPlan(income, totalExpenses, savingsTarget, leftover) });
+      }
+
+      document.getElementById('loading').classList.remove('show');
+      document.getElementById('analyzeBtn').disabled = false;
+    }
+
+    function getFallbackSuggestions(income, exp, savings, leftover) {
+      const ratio = exp / income;
+      const sug = [];
+      if (savings < income * 0.1) sug.push({ icon: '🌱', type: 'warn', title: 'Öka ditt sparande', text: 'Experter rekommenderar att spara minst 10% av inkomsten. Försök öka ditt månadsparande stegvis med 200–500 kr i taget.', impact: 'Bättre ekonomisk trygghet' });
+      if (ratio > 0.8) sug.push({ icon: '⚠️', type: 'red', title: 'Höga utgifter', text: 'Dina utgifter överstiger 80% av inkomsten. Se över fasta kostnader och prenumerationer.', impact: 'Potentiell besparing: 1 000–3 000 kr/mån' });
+      if (leftover > 0) sug.push({ icon: '📈', type: 'green', title: 'Investera överskottet', text: `Du har ${fmt(leftover)} kvar varje månad. Sätt dem i ett ISK-konto eller börsfond för långsiktig tillväxt.`, impact: `+${fmt(leftover)}/mån i investeringar` });
+      sug.push({ icon: '🏦', type: 'blue', title: 'Automatisera sparandet', text: 'Sätt upp ett autogiro som flyttar pengar till sparkontot samma dag du får lön.', impact: 'Beteendeförändring med stor effekt' });
+      return sug;
+    }
+
+    function getFallbackPlan(income, exp, savings, leftover) {
+      return [
+        { title: 'Granska prenumerationer', desc: 'Lista alla aktiva prenumerationer och avsluta de du inte använder regelbundet.', urgency: 'now' },
+        { title: 'Sätt upp autosparande', desc: 'Skapa ett autogiro på ' + fmt(savings) + ' till sparkontot vid lönedagen.', urgency: 'now' },
+        { title: 'Jämför mobilabonnemang', desc: 'Kolla om du kan få ett billigare abonnemang med samma data. Potentiell besparing 100–300 kr/mån.', urgency: 'soon' },
+        { title: 'Öppna ett ISK-konto', desc: 'Investera en del av sparandet i indexfonder för långsiktig tillväxt.', urgency: 'long' },
+        { title: 'Bygg en 3-månadersbuffert', desc: 'Spara tills du har ' + fmt(exp * 3) + ' i buffert för oväntade utgifter.', urgency: 'long' }
+      ];
+    }
+
+    function renderResults(income, totalExpenses, savingsTarget, leftover, parsed) {
+      const surplus = income - totalExpenses - savingsTarget;
+      document.getElementById('budgetOverview').innerHTML = `
+        <div class="budget-card green"><p class="budget-card-label">Inkomst</p><p class="budget-card-value">${fmt(income)}</p></div>
+        <div class="budget-card red"><p class="budget-card-label">Utgifter</p><p class="budget-card-value">${fmt(totalExpenses)}</p></div>
+        <div class="budget-card blue"><p class="budget-card-label">Sparande</p><p class="budget-card-value">${fmt(savingsTarget)}</p></div>
+        <div class="budget-card ${surplus >= 0 ? 'green' : 'red'}"><p class="budget-card-label">${surplus >= 0 ? 'Överskott' : 'Underskott'}</p><p class="budget-card-value">${fmt(Math.abs(surplus))}</p></div>
+      `;
+
+      const bar = document.getElementById('breakdownBar');
+      const legend = document.getElementById('breakdownLegend');
+      bar.innerHTML = ''; legend.innerHTML = '';
+
+      const allSegments = [
+        ...expenses.filter(e => e.amount > 0).map((e, i) => ({ name: e.name || 'Övrigt', amount: e.amount, color: COLORS[i % COLORS.length] })),
+        { name: 'Sparande', amount: savingsTarget, color: '#3a6b8a' }
+      ];
+
+      allSegments.forEach(seg => {
+        const pct = (seg.amount / income) * 100;
+        const div = document.createElement('div');
+        div.className = 'bar-segment';
+        div.style.cssText = `width:0%;background:${seg.color}`;
+        bar.appendChild(div);
+        setTimeout(() => div.style.width = Math.min(pct, 100) + '%', 80);
+        const li = document.createElement('div');
+        li.className = 'legend-item';
+        li.innerHTML = `<span class="legend-dot" style="background:${seg.color}"></span>${seg.name}: ${fmt(seg.amount)}`;
+        legend.appendChild(li);
+      });
+
+      const cards = document.getElementById('suggestionCards');
+      cards.innerHTML = '';
+      (parsed.suggestions || []).forEach((sug, i) => {
+        const card = document.createElement('div');
+        card.className = 'suggestion-card';
+        card.innerHTML = `<div class="sug-icon ${sug.type}">${sug.icon || '✦'}</div><div class="sug-body"><h3 class="sug-title">${sug.title}</h3><p class="sug-text">${sug.text}</p>${sug.impact ? `<p class="sug-impact">→ ${sug.impact}</p>` : ''}</div>`;
+        cards.appendChild(card);
+        setTimeout(() => card.classList.add('visible'), 80 + i * 110);
+      });
+
+      const planEl = document.getElementById('actionPlan');
+      const stepsEl = document.getElementById('actionSteps');
+      stepsEl.innerHTML = '';
+      const urgencyLabel = { now: 'Gör nu', soon: 'Denna månad', long: 'Långsiktigt' };
+      const urgencyClass  = { now: 'now', soon: 'soon', long: 'long' };
+      (parsed.actionPlan || []).forEach((step, i) => {
+        const div = document.createElement('div');
+        div.className = 'action-step';
+        div.innerHTML = `<span class="action-step-num">${String(i + 1).padStart(2, '0')}</span><div class="action-step-content"><p class="action-step-title">${step.title}</p><p class="action-step-desc">${step.desc}</p><span class="action-step-tag ${urgencyClass[step.urgency] || 'soon'}">${urgencyLabel[step.urgency] || 'Snart'}</span></div>`;
+        stepsEl.appendChild(div);
+        setTimeout(() => div.classList.add('visible'), 200 + i * 100);
+      });
+      planEl.style.display = 'block';
+      document.getElementById('results').classList.add('show');
+      document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    updateSlider();
+
+    // ═══════════════════════════════════════════════════
+    // CHATBOT
+    // ═══════════════════════════════════════════════════
+    let chatHistory = [];
+    let chatBusy = false;
+
+    const CHAT_SYSTEM = `Du är Ekonomicoachen, en vänlig, kunnig och engagerad svensk ekonomirådgivare. Du kan svara på frågor om fakturor, skatt, bolån, sparande (ISK, fonder), budgetering, kreditupplysning och all annan personlig ekonomi. Håll svaren kortfattade (3-5 meningar) men informativa. Använd ett varmt och uppmuntrande tonfall. Svara alltid på svenska.`;
+
+    function openChat() { document.getElementById('chatOverlay').classList.add('open'); }
+    function closeChat() { document.getElementById('chatOverlay').classList.remove('open'); }
+    function handleOverlayClick(e) { if (e.target === document.getElementById('chatOverlay')) closeChat(); }
+    function handleChatKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChatMessage(); } }
+    function sendChip(text) {
+      document.getElementById('chatInput').value = text;
+      sendChatMessage();
+      document.getElementById('chatChips').style.display = 'none';
+    }
+
+    async function sendChatMessage() {
+      if (chatBusy) return;
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      addMsg(text, 'user');
+      input.value = '';
+      chatHistory.push({ role: 'user', content: text });
+
+      const typingEl = addTyping();
+      chatBusy = true;
+      document.getElementById('chatSendBtn').disabled = true;
+
+      try {
+        const reply = await callClaude(chatHistory, CHAT_SYSTEM);
+        typingEl.remove();
+        addMsg(reply, 'bot');
+        chatHistory.push({ role: 'assistant', content: reply });
+      } catch {
+        typingEl.remove();
+        addMsg('Ursäkta, något gick fel. Kontrollera din anslutning och försök igen.', 'bot');
+      }
+
+      chatBusy = false;
+      document.getElementById('chatSendBtn').disabled = false;
+      document.getElementById('chatInput').focus();
+    }
+
+    function addMsg(text, role) {
+      const messagesEl = document.getElementById('chatMessages');
+      const div = document.createElement('div');
+      div.className = `msg ${role}`;
+      div.textContent = text;
+      messagesEl.appendChild(div);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      return div;
+    }
+
+    function addTyping() {
+      const messagesEl = document.getElementById('chatMessages');
+      const div = document.createElement('div');
+      div.className = 'msg typing';
+      div.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+      messagesEl.appendChild(div);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      return div;
+    }
+  </script>
+</body>
+</html>
